@@ -3,6 +3,7 @@ package ale.mach.driver.controllers;
 import ale.mach.driver.model.Tip;
 import ale.mach.driver.service.TipService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tips")
+@Validated
 public class TipController {
 
 	private final TipService service;
@@ -31,25 +35,25 @@ public class TipController {
 	}
 
 	@GetMapping("/{id}")
-	public Tip findById(@PathVariable int id) {
+	public Tip findById(@PathVariable @Positive int id) {
 		return service.findByID(id);
 	}
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public int create(@RequestBody Tip tip) {
-		return service.create(tip);
+	public int create(@Valid @RequestBody Tip tip) {
+		return service.create(tip);            //TODO validation
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void update(@PathVariable int id, @RequestBody Tip tip) {
+	public void update(@PathVariable @Positive int id, @Valid @RequestBody Tip tip) {
 		service.update(id, tip);
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable int id){
+	public void delete(@PathVariable @Positive int id) {
 		service.delete(id);
 	}
 }

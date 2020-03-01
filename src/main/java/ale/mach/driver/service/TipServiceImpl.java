@@ -37,7 +37,7 @@ public class TipServiceImpl implements TipService {
 
 	@Override
 	public Tip findByID(int id) {
-		return tipRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+		return tipRepository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format("No Tip object for id = %s", id)));
 	}
 
 	@Override

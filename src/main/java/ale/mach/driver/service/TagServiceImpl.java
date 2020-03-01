@@ -17,6 +17,6 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	public Tag findByName(String name) {
-		return tagRepository.findByName(name).orElseThrow(() -> new NoSuchElementException());
+		return tagRepository.findByName(name).orElseThrow(() -> new NoSuchElementException(String.format("No Tag object for name = %s", name)));
 	}
 }
