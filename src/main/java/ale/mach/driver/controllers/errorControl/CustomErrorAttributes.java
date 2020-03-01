@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
+
 @Component
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
@@ -12,9 +13,9 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
 
 		Map<String, Object> errorAttributes =
-					super.getErrorAttributes(webRequest, includeStackTrace);
-			errorAttributes.remove("trace");
+				super.getErrorAttributes(webRequest, includeStackTrace);
+		errorAttributes.remove("trace");
 
-			return errorAttributes;
+		return errorAttributes;
 	}
 }

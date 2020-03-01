@@ -1,7 +1,9 @@
-package ale.mach.driver.service;
+package ale.mach.driver.service.implementations;
 
 import ale.mach.driver.model.Tip;
 import ale.mach.driver.repository.TipRepository;
+import ale.mach.driver.service.TipService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +23,17 @@ public class TipServiceImpl implements TipService {
 		if (tipRepository.findById(id).isPresent()) {
 			tipRepository.save(tip);
 		} else {
-			throw new NoSuchElementException();
+			throw new NoSuchElementException(String.format("No Tip with id = %d", id));
 		}
 	}
 
 	@Override
 	public void delete(int id) {
-		tipRepository.deleteById(id);
+		try {
+			tipRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new NoSuchElementException(String.format("No Tip with id = %d", id));
+		}
 	}
 
 	@Override
@@ -37,7 +43,7 @@ public class TipServiceImpl implements TipService {
 
 	@Override
 	public Tip findByID(int id) {
-		return tipRepository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format("No Tip object for id = %s", id)));
+		return tipRepository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format("No Tip with id = %d", id)));
 	}
 
 	@Override
