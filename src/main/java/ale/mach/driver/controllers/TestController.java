@@ -1,11 +1,10 @@
 package ale.mach.driver.controllers;
 
-import ale.mach.driver.model.Tip;
-import ale.mach.driver.model.dtos.TipDto;
-import ale.mach.driver.service.TipService;
+import ale.mach.driver.model.Test;
+import ale.mach.driver.model.dtos.TestDto;
+import ale.mach.driver.service.TestService;
 import com.googlecode.jmapper.JMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,38 +22,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/driver/tip")
-@Validated
-public class TipController {
+@RequestMapping("/driver/test")
+public class TestController {
 
-	private final TipService service;
-	private JMapper<TipDto, Tip> tipToDtoJMapper = new JMapper<TipDto, Tip>(TipDto.class, Tip.class);
-	private JMapper<Tip, TipDto> dtoToTipJMapper = new JMapper<Tip, TipDto>(Tip.class, TipDto.class);
+	private final TestService service;
+	private JMapper<TestDto, Test> testToDtoJMapper = new JMapper<TestDto, Test>(TestDto.class, Test.class);
+	private JMapper<Test, TestDto> dtoToTestJMapper = new JMapper<Test, TestDto>(Test.class, TestDto.class);
 
-	public TipController(TipService service) {
+	public TestController(TestService service) {
 		this.service = service;
 	}
 
 	@GetMapping("")
-	public List<TipDto> findAll() {
-		return service.findAll().stream().map(tipToDtoJMapper::getDestination).collect(Collectors.toCollection(ArrayList::new));
+	public List<TestDto> findAll() {
+		return service.findAll().stream().map(testToDtoJMapper::getDestination).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@GetMapping("/{id}")
-	public TipDto findById(@PathVariable @Positive int id) {
-		return tipToDtoJMapper.getDestination(service.findByID(id));
+	public TestDto findById(@PathVariable @Positive int id) {
+		return testToDtoJMapper.getDestination(service.findByID(id));
 	}
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public int create(@Valid @RequestBody TipDto tipDto) {
-		return service.create(dtoToTipJMapper.getDestination(tipDto));
+	public int create(@Valid @RequestBody TestDto testDto) {
+		return service.create(dtoToTestJMapper.getDestination(testDto));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void update(@PathVariable @Positive int id, @Valid @RequestBody TipDto tipDto) {
-		service.update(id, dtoToTipJMapper.getDestination(tipDto));
+	public void update(@PathVariable @Positive int id, @Valid @RequestBody TestDto testDto) {
+		service.update(id, dtoToTestJMapper.getDestination(testDto));
 	}
 
 	@DeleteMapping("/{id}")
