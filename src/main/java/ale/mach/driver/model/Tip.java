@@ -11,26 +11,24 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @Table(name = "tips")
 public class Tip {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotNull
 	@NotBlank
 	private String title;
 	@Column(columnDefinition = "text")
-	@NotNull
 	@NotBlank
 	private String content;
 	@ManyToMany
-	@NotNull
 	@NotEmpty
 	private List<Tag> tags;
+
+
 }

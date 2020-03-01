@@ -1,7 +1,8 @@
-package ale.mach.driver.service;
+package ale.mach.driver.service.implementations;
 
 import ale.mach.driver.model.Tag;
 import ale.mach.driver.repository.TagRepository;
+import ale.mach.driver.service.TagService;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -17,6 +18,6 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	public Tag findByName(String name) {
-		return tagRepository.findByName(name).orElseThrow(() -> new NoSuchElementException(String.format("No Tag object for name = %s", name)));
+		return tagRepository.findByName(name).orElseThrow(() -> new NoSuchElementException(String.format("No Tag with name = %s", name)));
 	}
 }
